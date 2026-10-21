@@ -1,0 +1,13 @@
+.git
+.github
+node_modules
+fullstack-app/frontend/node_modules
+venv
+.venv
+__pycache__
+*.pyc
+.env
+.env.*
+dist
+fullstack-app/frontend/dist
+.DS_Store

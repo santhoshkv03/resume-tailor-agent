@@ -1,0 +1,23 @@
+# Dockerfile.backend
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies (build-essential, font libraries for ReportLab)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install python dependencies
+COPY fullstack-app/backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy shared core modules and backend application
+COPY core/ ./core/
+COPY fullstack-app/backend/ ./fullstack-app/backend/
+
+EXPOSE 8000
+
+ENV PYTHONUNBUFFERED=1
+
+CMD ["uvicorn", "main:app", "--app-dir", "fullstack-app/backend", "--host", "0.0.0.0", "--port", "8000"]
